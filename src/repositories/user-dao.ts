@@ -1,7 +1,7 @@
 import { User } from "../models/user"
 import { users } from "../database"
 
-let id = 1
+let userId = 1
 
 
 export function daoGetAllUsers():User[]{
@@ -9,8 +9,8 @@ export function daoGetAllUsers():User[]{
 }
 
 export function daoSaveOneUser(u:User){
-    g.id = id
-    id++
+    u.userId = userId
+    userId++
     users.push(u)
     return true
 }

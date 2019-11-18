@@ -1,5 +1,4 @@
 import {User} from '../models/user'
-import { users } from "../database"
 import { getAllUsers, saveOneUser } from '../services/user-service'
 import express from 'express'
 
@@ -18,10 +17,9 @@ userRouter.get('', controllerGetUsers)
 
 userRouter.post('', (req,res)=>{
     let {body} = req
-    let newU = new User('',0,0)
+    let newU = new User(0,"","","","","",0)
     for(let key in newU){
         console.log(body[key]);
-        
         if(body[key] === undefined){
             res.status(400).send('Please include all user fields')
             break;
