@@ -1,6 +1,6 @@
 import User from '../models/user'
 import { users } from "../database"
-import { getAllUsers, saveOneUser } from '../services/garden-service'
+import { getAllUsers, saveOneUser } from '../services/user-service'
 
 function controllerGetUsers(req, res){
     let users = getAllUsers()
