@@ -1,0 +1,31 @@
+{
+  "name": "ers",
+  "version": "1.0.0",
+  "description": "Expense Reimbursement System API",
+  "main": "index.js",
+  "dependencies": {
+    "@types/express": "^4.17.2",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "ts-node": "^8.5.2",
+    "tsconfig.json": "^1.0.7",
+    "typescript": "^3.7.2"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.4"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon --exec ts-node src/index.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/1910javareact/project-0-KnackHash.git"
+  },
+  "author": "Joshua Dean Roy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/1910javareact/project-0-KnackHash/issues"
+  },
+  "homepage": "https://github.com/1910javareact/project-0-KnackHash#readme"
+}
