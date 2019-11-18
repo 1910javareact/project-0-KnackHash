@@ -1,11 +1,12 @@
 import express from 'express'
 import bodyparser from 'body-parser'
+import { userRouter } from './routers/user-router'
 
 const app = express()
 
 app.use(bodyparser.json())
 
-// app.use('/budgets', budgetRouter)
+app.use('/users', userRouter)
 
 // app.use('/posts', postRouter)
 
