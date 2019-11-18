@@ -1,4 +1,4 @@
-import User from '../models/user'
+import {User} from '../models/user'
 import { users } from "../database"
 import { getAllUsers, saveOneUser } from '../services/user-service'
 import express from 'express'

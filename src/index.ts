@@ -8,7 +8,7 @@ app.use(bodyparser.json())
 
 app.use('/users', userRouter)
 
-// app.use('/posts', postRouter)
+// app.use('/roles', roleRouter)
 
 
 app.listen(1001, ()=>{
