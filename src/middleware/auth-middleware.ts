@@ -2,7 +2,6 @@ export function authorization(authRoles:string[]){
 
 return (req,res,next)=>{
     let isAuth = false
-    //lets check for being logged in
     if(!req.session.user){
         res.status(401).send('Please Login')
         return

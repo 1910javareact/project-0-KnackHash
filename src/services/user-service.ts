@@ -1,5 +1,5 @@
 import { User } from "../models/user"
-import { daoGetAllUsers, daoSaveOneUser } from "../repositories/user-dao"
+import { daoGetAllUsers, daoSaveOneUser, daoGetUserByUsernameAndPassword } from "../repositories/user-dao"
 
 export function getAllUsers():User[]{
     return daoGetAllUsers()
@@ -7,4 +7,8 @@ export function getAllUsers():User[]{
 
 export function saveOneUser(u:User){
     return daoSaveOneUser(u)
+}
+
+export function getUserByUsernameAndPassword(username:string, password:string){
+    return daoGetUserByUsernameAndPassword(username, password)
 }
