@@ -2,7 +2,6 @@ import {User} from '../models/user'
 import { getAllUsers, saveOneUser, getUserById } from '../services/user-service'
 import express from 'express'
 import { authorization } from '../middleware/auth-middleware'
-import { Role } from '../models/role'
 
 export const userRouter = express.Router()
 
