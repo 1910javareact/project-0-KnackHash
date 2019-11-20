@@ -35,8 +35,8 @@ userRouter.post('', (req,res)=>{
     }
 })
 
-userRouter.get('/:id', (req,res)=>{
-    let id = +req.params.id//from req.params, give me id
+userRouter.get('/:id', [ authorization(['Admin']), (req,res)=>{
+    let id = +req.params.id
     if(isNaN(id)){
         res.sendStatus(400)
     }else{
@@ -48,4 +48,4 @@ userRouter.get('/:id', (req,res)=>{
         }
         
     }
-})
+}])
