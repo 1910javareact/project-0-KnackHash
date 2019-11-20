@@ -4,6 +4,7 @@ import { userRouter } from './routers/user-router'
 import { loggingMiddleware } from './middleware/logging-middleware'
 import { sessionMiddleware } from './middleware/session-middleware'
 import { getUserByUsernameAndPassword } from './services/user-service'
+// import { authorization } from './middleware/auth-middleware'
 
 const app = express()
 
@@ -12,6 +13,8 @@ app.use(bodyparser.json())
 app.use(loggingMiddleware)
 
 app.use(sessionMiddleware)
+
+// app.use(authorization)
 
 app.use('/users', userRouter)
 

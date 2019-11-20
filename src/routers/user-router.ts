@@ -1,6 +1,7 @@
 import {User} from '../models/user'
 import { getAllUsers, saveOneUser } from '../services/user-service'
 import express from 'express'
+import { authorization } from '../middleware/auth-middleware'
 
 export const userRouter = express.Router()
 
@@ -13,7 +14,7 @@ function controllerGetUsers(req, res){
     }
 }
 
-userRouter.get('', controllerGetUsers)
+userRouter.get('', [ authorization(['Admin']), controllerGetUsers])
 
 userRouter.post('', (req,res)=>{
     let {body} = req
