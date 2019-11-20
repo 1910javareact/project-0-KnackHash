@@ -34,7 +34,7 @@ export function daoGetUserByUsernameAndPassword(username:string, password:string
         }
     }
     throw {
-        status: 401,
-        message: 'Bad credentials'
+        status: 400,
+        message: 'Invalid credentials'
     }
 }

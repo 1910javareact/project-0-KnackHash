@@ -4,7 +4,6 @@ import { userRouter } from './routers/user-router'
 import { loggingMiddleware } from './middleware/logging-middleware'
 import { sessionMiddleware } from './middleware/session-middleware'
 import { getUserByUsernameAndPassword } from './services/user-service'
-// import { authorization } from './middleware/auth-middleware'
 
 const app = express()
 
@@ -14,8 +13,6 @@ app.use(loggingMiddleware)
 
 app.use(sessionMiddleware)
 
-// app.use(authorization)
-
 app.use('/users', userRouter)
 
 // app.use('/roles', roleRouter)
@@ -23,7 +20,7 @@ app.use('/users', userRouter)
 app.post('/login', (req,res)=>{
     let {username, password} = req.body
     if(!username || !password ){
-        res.status(400).send('please have a username and password field')
+        res.status(400).send('Please have a username and password field')
     }
     try{
         let user = getUserByUsernameAndPassword(username, password)
