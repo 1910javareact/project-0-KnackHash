@@ -15,7 +15,7 @@ function controllerGetUsers(req, res){
     }
 }
 
-userRouter.get('', [ authorization(['Admin']), controllerGetUsers])
+userRouter.get('', [ authorization(['Admin', 'Finance-Manager']), controllerGetUsers])
 
 userRouter.post('', [ authorization(['Admin']),(req,res)=>{
     let {body} = req
@@ -36,17 +36,28 @@ userRouter.post('', [ authorization(['Admin']),(req,res)=>{
     }
 }])
 
-userRouter.get('/:id', [ authorization(['Admin']), (req,res)=>{
+userRouter.get('/:id', [ authorization(['Admin', 'Finance-Manager']), (req,res)=>{
     let id = +req.params.id
     if(isNaN(id)){
         res.sendStatus(400)
     }else{
         try{
-            let garden = getUserById(id)
-            res.json(garden)
+            let user = getUserById(id)
+            res.json(user)
         }catch(e){
             res.status(e.status).send(e.message)
         }
         
     }
 }])
+
+// userRouter.patch('/:id', [authorization(['Admin']), (req,res)=>{
+//     let user = req.session.user
+//     try{
+//         let user = 
+//         res.json(user)
+//     }catch(e){
+//         res.status(e.status).send(e.message)
+//     }
+    
+// }])
