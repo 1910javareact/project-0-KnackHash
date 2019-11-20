@@ -2,6 +2,7 @@ import {User} from '../models/user'
 import { getAllUsers, saveOneUser, getUserById } from '../services/user-service'
 import express from 'express'
 import { authorization } from '../middleware/auth-middleware'
+import { Role } from '../models/role'
 
 export const userRouter = express.Router()
 
@@ -16,9 +17,9 @@ function controllerGetUsers(req, res){
 
 userRouter.get('', [ authorization(['Admin']), controllerGetUsers])
 
-userRouter.post('', (req,res)=>{
+userRouter.post('', [ authorization(['Admin']),(req,res)=>{
     let {body} = req
-    let newU = new User(0,"","","","","",0)
+    let newU = new User(0,"","","","","",[0,""])
     for(let key in newU){
         console.log(body[key]);
         if(body[key] === undefined){
@@ -33,7 +34,7 @@ userRouter.post('', (req,res)=>{
     }else {
         res.sendStatus(500)
     }
-})
+}])
 
 userRouter.get('/:id', [ authorization(['Admin']), (req,res)=>{
     let id = +req.params.id

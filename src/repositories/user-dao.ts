@@ -1,7 +1,7 @@
 import { User } from "../models/user"
 import { users } from "../database"
 
-let userId = 1
+let userId = 2
 
 
 export function daoGetAllUsers():User[]{
@@ -17,7 +17,7 @@ export function daoSaveOneUser(u:User){
 
 export function daoGetUserById(id:number):User{
     for(let u of users){
-        if(u.id === id){
+        if(u.userId === id){
             return u
         }
     }
