@@ -1,5 +1,5 @@
 import {User} from '../models/user'
-import { getAllUsers, saveOneUser } from '../services/user-service'
+import { getAllUsers, saveOneUser, getUserById } from '../services/user-service'
 import express from 'express'
 import { authorization } from '../middleware/auth-middleware'
 
@@ -32,5 +32,20 @@ userRouter.post('', (req,res)=>{
         res.sendStatus(201)
     }else {
         res.sendStatus(500)
+    }
+})
+
+userRouter.get('/:id', (req,res)=>{
+    let id = +req.params.id//from req.params, give me id
+    if(isNaN(id)){
+        res.sendStatus(400)
+    }else{
+        try{
+            let garden = getUserById(id)
+            res.json(garden)
+        }catch(e){
+            res.status(e.status).send(e.message)
+        }
+        
     }
 })
