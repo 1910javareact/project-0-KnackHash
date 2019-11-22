@@ -1,11 +1,24 @@
 import { User } from "../models/user"
 import { users } from "../database"
+import { PoolClient } from "pg"
+import { connectionPool } from "."
 
 let userId = 2
 
 
-export function daoGetAllUsers():User[]{
-    return users
+export async function daoGetAllUsers():Promise<User[]>{
+    let client:PoolClient 
+    try{
+           client = await connectionPool.connect()
+        let result = client.query('SELECT * FROM "project0".user')
+        console.log(result.rows)
+        return null
+    }catch(e){
+        console.log(e)
+    }finally{
+    client && client.release()
+    }
+return users
 }
 
 export function daoSaveOneUser(u:User){
