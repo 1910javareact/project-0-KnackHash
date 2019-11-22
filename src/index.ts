@@ -4,6 +4,7 @@ import { userRouter } from './routers/user-router'
 import { loggingMiddleware } from './middleware/logging-middleware'
 import { sessionMiddleware } from './middleware/session-middleware'
 import { getUserByUsernameAndPassword } from './services/user-service'
+import { ReimbursementStatusRouter } from './routers/reimbursementStatus-router'
 
 const app = express()
 
@@ -14,6 +15,8 @@ app.use(loggingMiddleware)
 app.use(sessionMiddleware)
 
 app.use('/users', userRouter)
+
+app.use('/reimbursements', ReimbursementStatusRouter)
 
 // app.use('/roles', roleRouter)
 

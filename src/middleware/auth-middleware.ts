@@ -1,21 +1,19 @@
-export function authorization(authRoles:string[]){
+export function authorization(authRoles: string[]) {
+  return (req, res, next) => {
+    let isAuth = false;
+    if (!req.session.user) {
+      res.status(401).send("Please Login");
+      return;
+    }
 
-return (req,res,next)=>{
-    let isAuth = false
-    if(!req.session.user){
-        res.status(401).send('Please Login')
-        return
+    if (authRoles.includes(req.session.user.role.role)) {
+      isAuth = true;
     }
-    for(let userRole of req.session.user.roles){
-        if(authRoles.includes(userRole)){
-            isAuth = true
-        }
-    }
-    if(isAuth){
-        next()
-    }else{
-        res.status(401).send('The incoming token has expired')
-    }
-}
 
+    if (isAuth) {
+      next();
+    } else {
+      res.status(401).send("The incoming token has expired");
+    }
+  };
 }

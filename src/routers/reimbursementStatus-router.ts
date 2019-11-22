@@ -4,6 +4,8 @@ import express from 'express'
 
 export const ReimbursementStatusRouter = express.Router()
 
+// ReimbursementStatusRouter.get('', [ authorization(['Admin']), 
+
 ReimbursementStatusRouter.get('/:statusId', [ authorization(['Admin', 'Finance-Manager']), (req,res)=>{
     let id = +req.params.id
     if(isNaN(id)){
