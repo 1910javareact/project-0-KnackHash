@@ -1,39 +1,39 @@
-import express from 'express'
-import bodyparser from 'body-parser'
-import { userRouter } from './routers/user-router'
-import { loggingMiddleware } from './middleware/logging-middleware'
-import { sessionMiddleware } from './middleware/session-middleware'
-import { getUserByUsernameAndPassword } from './services/user-service'
-import { ReimbursementStatusRouter } from './routers/reimbursementStatus-router'
+import express from 'express';
+import bodyparser from 'body-parser';
+import { userRouter } from './routers/user-router';
+import { loggingMiddleware } from './middleware/logging-middleware';
+import { sessionMiddleware } from './middleware/session-middleware';
+import { getUserByUsernameAndPassword } from './services/user-service';
+import { ReimbursementStatusRouter } from './routers/reimbursementStatus-router';
 
-const app = express()
+const app = express();
 
-app.use(bodyparser.json())
+app.use(bodyparser.json());
 
-app.use(loggingMiddleware)
+app.use(loggingMiddleware);
 
-app.use(sessionMiddleware)
+app.use(sessionMiddleware);
 
-app.use('/users', userRouter)
+app.use('/users', userRouter);
 
-app.use('/reimbursements', ReimbursementStatusRouter)
+app.use('/reimbursements', ReimbursementStatusRouter);
 
 // app.use('/roles', roleRouter)
 
-app.post('/login', (req,res)=>{
-    let {username, password} = req.body
-    if(!username || !password ){
-        res.status(400).send('Please have a username and password field')
+app.post('/login', (req, res) => {
+    const {username, password} = req.body;
+    if (!username || !password ) {
+        res.status(400).send('Please have a username and password field');
     }
-    try{
-        let user = getUserByUsernameAndPassword(username, password)
-        req.session.user = user
-        res.json(user)
-    }catch(e){
-        res.status(e.status).send(e.message)
+    try {
+        const user = getUserByUsernameAndPassword(username, password);
+        req.session.user = user;
+        res.json(user);
+    } catch (e) {
+        res.status(e.status).send(e.message);
     }
-})
+});
 
-app.listen(1001, ()=>{
-    console.log('app has started');   
-})
+app.listen(1001, () => {
+    console.log('app has started');
+});

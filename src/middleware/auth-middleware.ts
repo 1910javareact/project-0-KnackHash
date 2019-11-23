@@ -2,7 +2,7 @@ export function authorization(authRoles: string[]) {
   return (req, res, next) => {
     let isAuth = false;
     if (!req.session.user) {
-      res.status(401).send("Please Login");
+      res.status(401).send('Please Login');
       return;
     }
 
@@ -13,7 +13,7 @@ export function authorization(authRoles: string[]) {
     if (isAuth) {
       next();
     } else {
-      res.status(401).send("The incoming token has expired");
+      res.status(401).send('The incoming token has expired');
     }
   };
 }
