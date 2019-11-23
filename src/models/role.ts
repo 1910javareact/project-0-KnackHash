@@ -1,8 +1,8 @@
-export class Role {
-roleID: Number;
-role: String;
-    constructor(roleID: Number, role: String) {
-        this.roleID = roleID;
+export class Role{
+    roleId: number;
+    role: string;
+    constructor(roleId: number, role: string) {
+        this.roleId = roleId;
         this.role = role;
     }
 }

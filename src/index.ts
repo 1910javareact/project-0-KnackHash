@@ -1,10 +1,9 @@
 import express from 'express';
 import bodyparser from 'body-parser';
-import { userRouter } from './routers/user-router';
 import { loggingMiddleware } from './middleware/logging-middleware';
 import { sessionMiddleware } from './middleware/session-middleware';
+import { userRouter } from './routers/user-router';
 import { getUserByUsernameAndPassword } from './services/user-service';
-import { ReimbursementStatusRouter } from './routers/reimbursementStatus-router';
 
 const app = express();
 
@@ -16,17 +15,15 @@ app.use(sessionMiddleware);
 
 app.use('/users', userRouter);
 
-app.use('/reimbursements', ReimbursementStatusRouter);
+// app.use('/reimbursements', reimbursementRouter); // to be made
 
-// app.use('/roles', roleRouter)
-
-app.post('/login', (req, res) => {
+app.post('/login', async (req, res) => {
     const {username, password} = req.body;
     if (!username || !password ) {
-        res.status(400).send('Please have a username and password field');
+        res.status(400).send('Please submit a username and password field!');
     }
     try {
-        const user = getUserByUsernameAndPassword(username, password);
+        const user = await getUserByUsernameAndPassword(username, password);
         req.session.user = user;
         res.json(user);
     } catch (e) {
@@ -35,5 +32,5 @@ app.post('/login', (req, res) => {
 });
 
 app.listen(1001, () => {
-    console.log('app has started');
+    console.log('App has started!');
 });
