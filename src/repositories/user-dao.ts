@@ -50,31 +50,31 @@ export async function daoGetAllUsers(): Promise<User[]> {
     }
 }
 
-export async function daoGetUserById(id: number){
+export async function daoGetUserById(id: number) {
     let client: PoolClient;
-    try{
-        client = await connectionPool.connect()
+    try {
+        client = await connectionPool.connect();
         const result = await client.query('SELECT * FROM project_0.user NATURAL JOIN project_0.user_role NATURAL JOIN project_0.role WHERE user_id = $1',
         [id]);
-        if(result.rowCount === 0){
-            throw 'User does not exist'
-        }else{
-            return userDTOtoUser(result.rows)
+        if (result.rowCount === 0) {
+            throw 'User does not exist';
+        } else {
+            return userDTOtoUser(result.rows);
         }
-    }catch(e){
-        if (e === 'User does not exist'){
+    } catch (e) {
+        if (e === 'User does not exist') {
             throw{
                 status: 404,
                 message: 'User not found'
-            }
-        }else{
+            };
+        } else {
             throw{
                 status: 500,
                 message: 'Internal Server Error'
-            }
+            };
         }
-    }finally{
-        client.release()
+    } finally {
+        client.release();
     }
 }
 

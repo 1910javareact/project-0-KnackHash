@@ -13,4 +13,4 @@ async function controllerGetUsers(req, res) {
     }
 }
 
-userRouter.get('',[loginCheck, controllerGetUsers]); 
+userRouter.get('', [loginCheck, controllerGetUsers]);
