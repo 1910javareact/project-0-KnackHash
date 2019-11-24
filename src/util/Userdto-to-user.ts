@@ -16,3 +16,21 @@ export function userDTOtoUser(uD: UserDTO[]): User {
         roles[2]
     );
 }
+
+export function multiUserDTOConvertor(uD: UserDTO[]): User[] {
+    let currentUser: UserDTO[] = [];
+    const result: User[] = [];
+    for (const u of uD) {
+        if (currentUser.length === 0) {
+            currentUser.push(u);
+        } else if (currentUser[0].user_id === u.user_id) {
+            currentUser.push(u);
+        } else {
+            result.push(userDTOtoUser(currentUser));
+            currentUser = [];
+            currentUser.push(u);
+        }
+    }
+    result.push(userDTOtoUser(currentUser));
+    return result;
+}
