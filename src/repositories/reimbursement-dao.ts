@@ -40,34 +40,24 @@ export async function findByStatusId(statusid: number): Promise<Reimbursement[]>
     }
   }
 
-  export async function submit(req) {
-    const client = await connectionPool.connect();
-    const author = req.session.user.userId;
-    const amount = req.body.amount;
-    const description = req.body.description;
-    const statusid = req.body.status.statusId;
-    const typeid = req.body.type.typeId;
-    if (typeof amount !== 'number' || typeof statusid !== 'number' || typeof typeid !== 'number' ) {
-        return undefined;
-      }
-    try {
-        if (amount && description && statusid && typeid) {
-            const result = await client.query (
-             'INSERT INTO project0.reimbursements (author, amount, description, statusid, typeid) VALUES($1, $2, $3, $4, $5) RETURNING reimbursementid',
-             [author, amount, description, statusid, typeid]
-            );
-            if (result) {
-                return result.rows[0].reimbursementid;
-            } else {
-                return undefined;
-            }
-        } else {
-            return undefined;
-        }
-    } finally {
-      client.release();
-    }
-  }
+  export async function submit(r: Reimbursement): Promise<Reimbursement> {
+     const client = await connectionPool.connect();
+     try {
+         await client.query('BEGIN');
+         await client.query('INSERT INTO project0.reimbursement (reimbursementId, author, dateSubmitted, "description", status, type) values ($1,$2,$4,$6,$8,$9) RETURNING reimbursement_id',
+         [r.reimbursementId, r.author, r.dateSubmitted, r.description, r.status, r.type]);
+         await client.query('COMMIT');
+         return r;
+     } catch (e) {
+         await client.query('ROLLBACK');
+         throw {
+             status: 500,
+             message: 'Internal Server Error'
+         };
+     } finally {
+         client && client.release();
+     }
+ }
 
 export async function updateReimbursement(req) {
     const client = await connectionPool.connect();

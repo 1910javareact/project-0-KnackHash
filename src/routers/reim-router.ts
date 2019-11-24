@@ -3,8 +3,29 @@ import express from 'express';
 import { getReimbursementStatus } from '../repositories/reimbursementStatus-dao';
 import { findByUserId, submit, updateReimbursement } from '../repositories/reimbursement-dao';
 import { Reimbursement } from '../models/reimbursement';
+import { PoolClient } from 'pg';
+import { connectionPool } from '../repositories';
+import { buildReimbursement } from '../util/Reimdto-to-reim';
 
 export const reimbursementRouter = express.Router();
+
+reimbursementRouter.get('', async (req, res) => {
+    let client: PoolClient;
+    try {
+        client = await connectionPool.connect();
+        const result = await client.query('SELECT * FROM project0.reimbursement');
+        console.log(result.rows);
+        return buildReimbursement(result.rows);
+    } catch (e) {
+        console.log(e);
+        throw {
+            status: 500,
+            message: 'Internal Server Error'
+        };
+    } finally {
+        client && client.release();
+    }
+});
 
 reimbursementRouter.get('/status/:statusId', [finManCheck, async (req, res) => {
     const id = +req.params.statusId;
@@ -36,7 +57,7 @@ reimbursementRouter.get('/author/userId/:userId', [loginCheck], (req, res) => {
 
 reimbursementRouter.post('', (req, res) => {
     const {body} = req;
-    const newR = new Reimbursement(0, 0, 0, 0, 0, '', 0, 0, 0);
+    const newR = new Reimbursement(0, 0, 0, 0, '', 0, 0, 0, 0);
     for (const key in newR) {
         if (body[key] === undefined) {
             res.status(400).send('Please include all Post fields');
