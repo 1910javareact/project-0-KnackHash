@@ -1,6 +1,6 @@
 import express from 'express';
 import { getAllUsers } from '../services/user-service';
-// import { authorization } from '../middleware/auth-middleware';
+import { loginCheck } from '../middleware/auth-middleware';
 
 export const userRouter = express.Router();
 
@@ -13,4 +13,4 @@ async function controllerGetUsers(req, res) {
     }
 }
 
-userRouter.get('', controllerGetUsers); //Had to disabled authentication, role of User is showing, but nothing will authenticate.
+userRouter.get('',[loginCheck, controllerGetUsers]); 

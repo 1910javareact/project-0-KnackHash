@@ -34,25 +34,32 @@ reimbursementRouter.get('/author/userId/:userId', [loginCheck], (req, res) => {
     }
 });
 
-reimbursementRouter.post('', [loginCheck], (req, res) => {
+reimbursementRouter.post('', (req, res) => {
     const {body} = req;
-    const newR =  new Reimbursement(0, 0, 0, 0, 0, '', 0, 0, 0);
+    const newR = new Reimbursement(0, 0, 0, 0, 0, '', 0, 0, 0);
     for (const key in newR) {
         if (body[key] === undefined) {
-            res.status(400).send('Please include all reimbursement fields');
+            res.status(400).send('Please include all Post fields');
             break;
         } else {
             newR[key] = body[key];
         }
     }
-    if (submit(newR)) {
-        res.sendStatus(201);
-    } else {
-        res.sendStatus(500);
+    try {
+        const result = submit(newR);
+        if (result) {
+            res.sendStatus(201);
+        }
+    } catch (e) {
+        if (e === 500) {
+            res.sendStatus(500);
+        } else {
+            res.sendStatus(400);
+        }
     }
 });
 
-reimbursementRouter.patch('', [finManCheck], (req, res) => {
+reimbursementRouter.patch('', (req, res) => {
     try {
         const{body} = req;
         const update = updateReimbursement(body);
