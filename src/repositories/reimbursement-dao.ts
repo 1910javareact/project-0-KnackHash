@@ -28,7 +28,7 @@ export async function findByStatusId(statusid: number): Promise<Reimbursement[]>
         'SELECT * FROM project0.reimbursements WHERE author = $1 ORDER BY datesubmitted ASC',
         [userid]
       );
-      if(result){
+      if (result) {
         return Promise.all(result.rows.map(async (DbReimbursement) => {
           return await buildReimbursement(DbReimbursement);
         }));
@@ -69,18 +69,18 @@ export async function findByStatusId(statusid: number): Promise<Reimbursement[]>
     }
   }
 
-export async function updateReimbursement(req){
+export async function updateReimbursement(req) {
     const client = await connectionPool.connect();
     const dateresolved = new Date().toISOString().slice(0, 19).replace('T', ' ');
     const resolver = req.session.user.userId;
     const statusid = req.body.status.statusId;
     const typeid = req.body.type.typeId;
     const reimbursementid = req.body.reimbursementId;
-    if (typeof reimbursementid !== 'number' || typeof statusid !== 'number' || typeof typeid !== 'number' ){
+    if (typeof reimbursementid !== 'number' || typeof statusid !== 'number' || typeof typeid !== 'number' ) {
         return undefined;
       }
     try {
-        if (reimbursementid && statusid && typeid){
+        if (reimbursementid && statusid && typeid) {
             const result = await client.query(
                 'UPDATE project0.reimbursements set dateresolved = $1, resolver = $2, statusid = $3, typeid = $4 WHERE reimbursementid = $5 RETURNING reimbursementid',
                 [dateresolved, resolver, statusid, typeid, reimbursementid]
@@ -93,7 +93,7 @@ export async function updateReimbursement(req){
         } else {
             return undefined;
         }
-    } finally{
+    } finally {
         client.release();
     }
 }

@@ -1,7 +1,7 @@
 import { User } from '../models/user';
 import { daoGetUserByUsernameAndPassword, daoGetAllUsers } from '../repositories/user-dao';
 
-export function getUserByUsernameAndPassword(username: string, password: string): Promise<User>{
+export function getUserByUsernameAndPassword(username: string, password: string): Promise<User> {
     return daoGetUserByUsernameAndPassword(username, password);
 }
 

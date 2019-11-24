@@ -26,9 +26,9 @@ reimbursementRouter.get('/author/userId/:userId', [loginCheck], (req, res) => {
         res.sendStatus(400);
     } else {
         try {
-            const reimbursement = findByUserId(id)
-            res.status(200).json(reimbursement)
-        } catch(e){
+            const reimbursement = findByUserId(id);
+            res.status(200).json(reimbursement);
+        } catch (e) {
             res.status(e.status).send(e.message);
         }
     }
@@ -52,16 +52,16 @@ reimbursementRouter.post('', [loginCheck], (req, res) => {
     }
 });
 
-reimbursementRouter.patch('', [finManCheck], (req,res)=>{
-    try{
-        let{body} = req
-        let update = updateReimbursement(body)
-        if(update){
-            res.status(200).json(update)
-        }else{
-            res.status(400).send('Reimbursement not found')
+reimbursementRouter.patch('', [finManCheck], (req, res) => {
+    try {
+        const{body} = req;
+        const update = updateReimbursement(body);
+        if (update) {
+            res.status(200).json(update);
+        } else {
+            res.status(400).send('Reimbursement not found');
         }
-    }catch(e){
-        res.status(e.status).send(e.message)
+    } catch (e) {
+        res.status(e.status).send(e.message);
     }
 });

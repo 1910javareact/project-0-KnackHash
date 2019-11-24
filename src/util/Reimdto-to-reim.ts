@@ -1,6 +1,6 @@
 import { Reimbursement } from '../models/reimbursement';
 
-export async function buildReimbursement(reimbursementJson): Promise<Reimbursement>{
+export async function buildReimbursement(reimbursementJson): Promise<Reimbursement> {
     return {
         reimbursementId: reimbursementJson.reimbursementid,
         author: reimbursementJson.author,

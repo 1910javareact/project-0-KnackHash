@@ -14,7 +14,7 @@ export async function getRoles (roleid: number): Promise<Role> {
                 roleId: DbRole.roleid,
                 role: DbRole.rolename
             };
-        } else{
+        } else {
             return undefined;
         }
     } finally {
