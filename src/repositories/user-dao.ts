@@ -54,7 +54,7 @@ export async function daoGetUserById(id: number) {
     let client: PoolClient;
     try {
         client = await connectionPool.connect();
-        const result = await client.query('SELECT * FROM project_0.user NATURAL JOIN project_0.user_role NATURAL JOIN project_0.role WHERE user_id = $1',
+        const result = await client.query('SELECT * FROM project0.user NATURAL JOIN project0.user_role NATURAL JOIN project0.role WHERE user_id = $1',
         [id]);
         if (result.rowCount === 0) {
             throw 'User does not exist';
