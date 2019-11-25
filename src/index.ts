@@ -28,12 +28,13 @@ app.get('/', (request, response) => {
 
 app.get('/users', db.getUsers);
 app.get('/users/:id', db.getUserById);
-app.post('/users', db.createUser)
+app.post('/users', db.createUser);
 // app.put('/users/:id', db.updateUser)
 // app.delete('/users/:id', db.deleteUser)
 
 app.get('/reimbursements', db2.getReimbursements);
 app.get('/reimbursements/:id', db2.getReimById);
+app.post('/reimbursements', db2.createReimbursement);
 
 // app.use('/users', userRouter);
 

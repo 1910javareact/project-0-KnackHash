@@ -5,6 +5,8 @@ import express from 'express';
 // import { Reimbursement } from '../models/reimbursement';
 // import { PoolClient } from 'pg';
 import { connectionPool } from '../repositories';
+import { Reimbursement } from '../models/reimbursement';
+import { submit } from '../repositories/reimbursement-dao';
 // import { buildReimbursement } from '../util/Reimdto-to-reim';
 
 export const reimbursementRouter = express.Router();
@@ -28,10 +30,35 @@ const getReimbursements = (request, response) => {
     });
   };
 
+  const createReimbursement = async (req, res) => {
+    const {body} = req;
+    const newR = new Reimbursement(0, 0, 0, 0, '', 0, 0, 0, 0);
+    for (const key in newR) {
+        if (body[key] === undefined) {
+            res.status(400).send('Please include all Post fields');
+            break;
+        } else {
+            newR[key] = body[key];
+        }
+    }
+    try {
+        const result = submit(newR);
+        if (result) {
+            res.sendStatus(201);
+        }
+    } catch (e) {
+        if (e === 500) {
+            res.sendStatus(500);
+        } else {
+            res.sendStatus(400);
+        }
+    }
+};
+
   module.exports = {
     getReimbursements,
     getReimById,
-    // createUser,
+    createReimbursement,
     // updateUser,
     // deleteUser,
   };
@@ -82,30 +109,6 @@ const getReimbursements = (request, response) => {
 //     }
 // });
 
-// reimbursementRouter.post('', (req, res) => {
-//     const {body} = req;
-//     const newR = new Reimbursement(0, 0, 0, 0, '', 0, 0, 0, 0);
-//     for (const key in newR) {
-//         if (body[key] === undefined) {
-//             res.status(400).send('Please include all Post fields');
-//             break;
-//         } else {
-//             newR[key] = body[key];
-//         }
-//     }
-//     try {
-//         const result = submit(newR);
-//         if (result) {
-//             res.sendStatus(201);
-//         }
-//     } catch (e) {
-//         if (e === 500) {
-//             res.sendStatus(500);
-//         } else {
-//             res.sendStatus(400);
-//         }
-//     }
-// });
 
 // reimbursementRouter.patch('', (req, res) => {
 //     try {
