@@ -45,13 +45,13 @@ const createUser = async (req, res) => {
     const { body } = req;
     const newU = new User(0, "", "", "", "", "");
     for (const key in newU) {
-        // if (body[key] === undefined) {
-        //     res.status(400).send('Please include all user fields');
-        //     break;
-        // } else {
+        if (body[key] === undefined) {
+            res.status(400).send('Please include all user fields');
+            break;
+        } else {
             newU[key] = body[key];
         }
-    // }
+    }
     try {
         const user = await saveOneUser(newU);
         res.status(201).json(user);
