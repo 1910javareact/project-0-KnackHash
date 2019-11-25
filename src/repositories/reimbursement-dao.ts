@@ -44,7 +44,7 @@ export async function findByStatusId(statusid: number): Promise<Reimbursement[]>
      const client = await connectionPool.connect();
      try {
          await client.query('BEGIN');
-         await client.query('INSERT INTO project0.reimbursement ("reimbursement_id", "author", "datesubmitted", "dateresolved", "description", "resolver", "status", "reimbursementtype", "amount") values ($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING reimbursement_id',
+         await client.query('INSERT INTO project0.reimbursement ("reimbursement_id", "author", "datesubmitted", "dateresolved", "description", "resolver", "status", "reimbursementtype", "amount") values ($1,$2,$3,$4,$5,$6,$7,$8,$9)',
          [r.reimbursementId, r.author, r.dateSubmitted, r.dateResolved, r.description, r.resolver, r.status, r.type, r.amount]);
          await client.query('COMMIT');
          return r;

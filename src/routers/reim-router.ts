@@ -2,7 +2,6 @@
 import express from 'express';
 // import { getReimbursementStatus } from '../repositories/reimbursementStatus-dao';
 // import { findByUserId, submit, updateReimbursement } from '../repositories/reimbursement-dao';
-// import { Reimbursement } from '../models/reimbursement';
 // import { PoolClient } from 'pg';
 import { connectionPool } from '../repositories';
 import { Reimbursement } from '../models/reimbursement';
