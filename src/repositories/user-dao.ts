@@ -3,6 +3,26 @@ import { connectionPool } from '.';
 import { User } from '../models/user';
 import { userDTOtoUser, multiUserDTOConvertor } from '../util/Userdto-to-user';
 
+export async function daoSaveOneUser(u: User): Promise<User> {
+     let client: PoolClient;
+     client = await connectionPool.connect();
+     try {
+         await client.query('BEGIN');
+         await client.query('INSERT INTO project0.usertable ("user_id", "username", "password", "firstname", "lastname", "email") values ($1,$2,$3,$4,$5,$6) RETURNING username',
+         [u.userId, u.username, u.password, u.firstName, u.lastName, u.email]);
+         await client.query('COMMIT');
+         return u;
+     } catch (e) {
+         await client.query('ROLLBACK');
+         throw {
+             status: 500,
+             message: 'Internal Server Error'
+         };
+     } finally {
+         client && client.release();
+     }
+ }
+
 export async function daoGetUserByUsernameAndPassword(username: string, password: string): Promise<User> {
     let client: PoolClient;
     try {

@@ -12,8 +12,7 @@ export function userDTOtoUser(uD: UserDTO[]): User {
         uD[0].password,
         uD[0].firstName,
         uD[0].lastName,
-        uD[0].email,
-        roles[2]
+        uD[0].email
     );
 }
 

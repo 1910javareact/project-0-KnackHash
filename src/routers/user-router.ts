@@ -1,7 +1,12 @@
 import { connectionPool } from '../repositories';
+import { User } from '../models/user';
+import { saveOneUser } from '../services/user-service';
+// import { User } from '../models/user';
+// import { saveOneUser } from '../services/user-service';
 // import express from 'express';
 // import { getAllUsers } from '../services/user-service';
 // import { loginCheck } from '../middleware/auth-middleware';
+// const db = require('../routers/user-router');
 
 const getUsers = (request, response) => {
     connectionPool.query('SELECT * FROM project0.usertable ORDER BY user_id ASC', (error, results) => {
@@ -21,6 +26,39 @@ const getUsers = (request, response) => {
       response.status(200).json(results.rows);
     });
   };
+
+//   const createUser = async (req, res) => {
+//     const { body } = req;
+//     const newU = new User(0, '', '', '', '', '');
+//     for (const key in newU) {
+//             newU[key] = body[key];
+//         }
+//     try {
+//         const user = await saveOneUser(newU);
+//         res.status(201).json(user);
+//     } catch (e) {
+//         res.status(e.status).send(e.message);
+//     }
+// };
+
+const createUser = async (req, res) => {
+    const { body } = req;
+    const newU = new User(0, "", "", "", "", "");
+    for (const key in newU) {
+        // if (body[key] === undefined) {
+        //     res.status(400).send('Please include all user fields');
+        //     break;
+        // } else {
+            newU[key] = body[key];
+        }
+    // }
+    try {
+        const user = await saveOneUser(newU);
+        res.status(201).json(user);
+    } catch (e) {
+        res.status(e.status).send(e.message);
+    }
+};
 
 //   const createUser = (request, response) => {
 //     const { user_id, username, password, firstname, lastname, email } = request.body;
@@ -60,7 +98,7 @@ const getUsers = (request, response) => {
   module.exports = {
     getUsers,
     getUserById,
-    // createUser,
+    createUser,
     // updateUser,
     // deleteUser,
   };
