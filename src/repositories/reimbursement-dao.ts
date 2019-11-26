@@ -1,6 +1,7 @@
 import { connectionPool } from '.';
 import { Reimbursement } from '../models/reimbursement';
 import { buildReimbursement } from '../util/Reimdto-to-reim';
+import { PoolClient } from 'pg';
 
 export async function findByStatusId(statusid: number): Promise<Reimbursement[]> {
     const client = await connectionPool.connect();
@@ -41,7 +42,8 @@ export async function findByStatusId(statusid: number): Promise<Reimbursement[]>
   }
 
   export async function submit(r: Reimbursement): Promise<Reimbursement> {
-     const client = await connectionPool.connect();
+      let client: PoolClient;
+     client = await connectionPool.connect();
      try {
          await client.query('BEGIN');
          await client.query('INSERT INTO project0.reimbursement ("reimbursement_id", "author", "datesubmitted", "dateresolved", "description", "resolver", "status", "reimbursementtype", "amount") values ($1,$2,$3,$4,$5,$6,$7,$8,$9)',
@@ -87,7 +89,6 @@ export async function updateReimbursement(req) {
         client.release();
     }
 }
-
 
   export async function findByRId(reimbursementid: number): Promise<Reimbursement> {
     const client = await connectionPool.connect();
