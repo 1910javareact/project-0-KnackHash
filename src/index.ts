@@ -4,6 +4,7 @@ import { loggingMiddleware } from './middleware/logging-middleware';
 import { sessionMiddleware } from './middleware/session-middleware';
 import { userRouter } from './routers/user-router';
 import { getUserByUsernameAndPassword } from './services/user-service';
+import { reimRouter } from './routers/reim-router';
 
 const app = express();
 
@@ -15,7 +16,7 @@ app.use(sessionMiddleware);
 
 app.use('/users', userRouter);
 
-// app.use('/reimbursements', reimbursementRouter);
+app.use('/reimbursements', reimRouter);
 
 app.post('/login', async (req, res) => {
     const {username, password} = req.body;
