@@ -1,6 +1,6 @@
 import express from 'express';
 import { User } from '../models/user';
-import { getAllUsers, saveOneUser, getUserById } from '../services/user-service';
+import { getAllUsers, saveOneUser, getUserById, updateUser } from '../services/user-service';
 import { authorization } from '../middleware/auth-middleware';
 
 export const userRouter = express.Router();
@@ -46,6 +46,17 @@ async (req, res) => {
     try {
         const user = await saveOneUser(newU);
         res.status(201).json(user);
+    } catch (e) {
+        res.status(e.status).send(e.message);
+    }
+}]);
+
+userRouter.patch('', [authorization(1),
+async (req, res) => {
+    try {
+        const {body} = req;
+        const user = await updateUser(body);
+        res.status(200).json(user);
     } catch (e) {
         res.status(e.status).send(e.message);
     }

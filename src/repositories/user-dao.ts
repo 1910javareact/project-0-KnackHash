@@ -93,3 +93,21 @@ export async function daoGetUserByUsernameAndPassword(username: string, password
         client && client.release();
     }
 }
+export async function daoUpdateUser(newUser: User) {
+    let client: PoolClient;
+    try {
+        client = await connectionPool.connect();
+        client.query('BEGIN');
+        await client.query('update project0.user set userid = $1, username = $2, password = $3, firstname = $4, lastname = $5, email = $6, role = $7 where userid = $1',
+            [newUser.userId, newUser.username, newUser.password, newUser.firstName, newUser.lastName, newUser.email, newUser.role]);
+        client.query('COMMIT');
+    } catch (e) {
+        client.query('ROLLBACK');
+        throw {
+            status: 500,
+            message: 'Internal Server Error'
+        };
+    } finally {
+        client.release();
+    }
+}

@@ -1,5 +1,5 @@
 import { User } from '../models/user';
-import { daoGetAllUsers, daoSaveOneUser, daoGetUserById, daoGetUserByUsernameAndPassword } from '../repositories/user-dao';
+import { daoGetAllUsers, daoSaveOneUser, daoGetUserById, daoGetUserByUsernameAndPassword, daoUpdateUser } from '../repositories/user-dao';
 
 export async function getAllUsers(): Promise<User[]> {
     try {
@@ -20,4 +20,19 @@ export function getUserById(userid: number): Promise<User> {
 
 export function getUserByUsernameAndPassword(username: string, password: string): Promise<User> {
     return daoGetUserByUsernameAndPassword(username, password);
+}
+
+export async function updateUser(req: User) {
+    try {
+        const user = await daoGetUserById(req.userId);
+        for (const key in req) {
+            if (req[key] !== undefined && user.hasOwnProperty(key)) {
+                user[key] = req[key];
+            }
+        }
+        await daoUpdateUser(user);
+        return user;
+    } catch (e) {
+        throw e;
+    }
 }
