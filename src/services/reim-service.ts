@@ -1,18 +1,53 @@
-import * as rdao from '../repositories/reim-dao';
+import * as reimbursementsDao from '../repositories/reim-dao';
 import { Reim } from '../models/reim';
-// import { User } from '../models/user';
-
 
 export function getAllReims(): Promise<Reim[]> {
-    return rdao.daoGetAllReims();
+    return reimbursementsDao.daoGetAllReims();
 }
 
-// export function saveOneReim(r: Reim) {
-//     return rdao.daoSaveOneReim(r);
-// }
+export function getReimbursementsByReimbursementId(reimbursementid){
+    try {
+        return reimbursementsDao.daoGetReimbursementsByReimbursementId(reimbursementid);
+    } catch(e) {
+        throw e;
+    }
+}
+export function getReimbursementsByStatusId(status: number) {
+    try {
+        return reimbursementsDao.daoGetReimbursementsByStatusId(status);
+    } catch (e) {
+        throw e;
+    }
+}
 
-// export function updateReim(id: number, user: User) {
-//     const reim = rdao.daoFindReimById(id);
-//     rdao.daoUpdateReim(reim);
-//     return reim;
-// }
+export function getReimbursementsByUserId(userId: number) {
+    try {
+        return reimbursementsDao.daoGetReimbursementsByUserId(userId);
+    } catch (e) {
+        throw e;
+    }
+
+}
+
+export function postReimbersement(post) {
+    try {
+        return reimbursementsDao.daoPostReimbersement(post);
+    } catch (e) {
+        throw e;
+    }
+
+}
+
+export async function patchReimbersement(patch) {
+    try {
+        const post = await reimbursementsDao.daoGetReimbursementsByReimbursementId(patch.reimbursementId);
+        for (const key in post) {
+            if (patch.hasOwnProperty(key)) {
+                post[key] = patch[key];
+            }
+        }
+        return await reimbursementsDao.daoUpdateReimbursement(post);
+    } catch (e) {
+        throw e;
+    }
+}
