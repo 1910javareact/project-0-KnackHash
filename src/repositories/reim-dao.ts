@@ -78,15 +78,15 @@ export async function daoGetReimbursementsByUserId(userid: number) {
     }
 }
 
-export async function daoPostReimbersement(post) {
+export async function daoPostReimbersement(Reim) {
     let client: PoolClient;
     try {
         client = await connectionPool.connect();
         client.query('BEGIN');
         await client.query('INSERT INTO project0.reimbursement (author, amount, datesubmitted, description, status, type) values ($1,$2,$3,$4,1,$5)',
-            [post.author, post.amount, post.dateSubmitted, post.description, post.type]);
+            [Reim.author, Reim.amount, Reim.dateSubmitted, Reim.description, Reim.type]);
         const result = await client.query('SELECT * FROM project0.reimbursement WHERE author = $1 ORDER BY reimbursementid DESC LIMIT 1 OFFSET 0',
-            [post.author]);
+             [Reim.author]);
         client.query('COMMIT');
         return reimDTOtoReim(result.rows);
     } catch (e) {
@@ -133,8 +133,9 @@ export async function daoUpdateReimbursement(r: Reim) {
         try {
             client = await connectionPool.connect();
             client.query('BEGIN');
-            await client.query('update project0.reimbursement set dateresolved = $1, resolver = $2, status = $3 where reimbursementid = $4',
-                [r.dateResolved, r.resolver, r.status, r.reimbursementId]);
+            await client.query(`UPDATE project0.reimbursement SET author = $2, amount = $3, datesubmitted = $4, dateresolved = $5, description = $6,
+            resolver = $7, status = $8, type = $9 WHERE reimbursementid = $1;`,
+            [r.reimbursementId, r.author, r.amount, r.dateSubmitted, r.dateResolved, r.description, r.resolver, r.status, r.type]);
             client.query('COMMIT');
         } catch (e) {
             client.query('ROLLBACK');
