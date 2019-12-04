@@ -1,7 +1,7 @@
 import express from 'express';
 import { User } from '../models/user';
 import { getAllUsers, saveOneUser, getUserById, updateUser } from '../services/user-service';
-import { authorization } from '../middleware/auth-middleware';
+// import { authorization } from '../middleware/auth-middleware';
 
 export const userRouter = express.Router();
 

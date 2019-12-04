@@ -64,7 +64,7 @@ reimRouter.get('/author/:userid', authorization(1),
     });
 
 
-reimRouter.post('', //authorization(1 || 2 || 3),
+reimRouter.post('', authorization(1 || 2 || 3),
 async (req, res) => {
     const{body} = req;
     const newR = new Reim(0, 0, 0, 0, 0, ``, 0, 0, 0);
