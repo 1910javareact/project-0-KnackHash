@@ -33,6 +33,6 @@ app.post('/login', async (req, res) => {
 }
 });
 
-app.listen(1001, () => {
+app.listen(1000, () => {
     console.log('Expense Reimbursement System Initialized');
 });
