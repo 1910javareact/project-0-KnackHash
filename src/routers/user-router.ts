@@ -14,7 +14,8 @@ async function controllerGetUsers(req, res) {
     }
 }
 
-userRouter.get('', [authorization(1), controllerGetUsers]);
+userRouter.get('', //[authorization(1), 
+               controllerGetUsers);
 
 userRouter.get('/:id', async (req, res) => {
     const id = +req.params.id;
@@ -31,7 +32,7 @@ userRouter.get('/:id', async (req, res) => {
     }
 });
 
-userRouter.post('', [authorization(1 || 2),
+userRouter.post('', //[authorization(1 || 2),
 async (req, res) => {
     const { body } = req;
     const newU = new User(0, '', '', '', '', '', 0);
@@ -49,9 +50,9 @@ async (req, res) => {
     } catch (e) {
         res.status(e.status).send(e.message);
     }
-}]);
+});
 
-userRouter.patch('', [authorization(1),
+userRouter.patch('', //[authorization(1),
 async (req, res) => {
     try {
         const {body} = req;
@@ -60,4 +61,4 @@ async (req, res) => {
     } catch (e) {
         res.status(e.status).send(e.message);
     }
-}]);
+});
