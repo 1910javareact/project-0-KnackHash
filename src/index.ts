@@ -5,13 +5,13 @@ import { sessionMiddleware } from './middleware/session-middleware';
 import { userRouter } from './routers/user-router';
 import { getUserByUsernameAndPassword } from './services/user-service';
 import { reimRouter } from './routers/reim-router';
-import cors from 'cors';
+import { corsLocal } from './middleware/cors-middleware';
 
 const app = express();
 
-app.use(cors());
-
 app.use(bodyparser.json());
+
+app.use(corsLocal);
 
 app.use(loggingMiddleware);
 
